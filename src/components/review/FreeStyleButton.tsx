@@ -20,7 +20,7 @@ export function FreeStyleButton({ onClick }: { onClick: () => Promise<void> }) {
       }}
     >
       {loading ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
-      втси╥╒╩с
+      Х┤╙Г■╠Е▐▒Ф▄╔
     </Button>
   );
 }

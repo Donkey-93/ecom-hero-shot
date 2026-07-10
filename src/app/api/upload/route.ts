@@ -11,13 +11,13 @@ export async function POST(req: NextRequest) {
   const form = await req.formData();
   const file = form.get('file');
   if (!(file instanceof File)) {
-    return NextResponse.json({ error: '缺少文件' }, { status: 400 });
+    return NextResponse.json({ error: '缂哄皯鏂囦欢' }, { status: 400 });
   }
   if (!ALLOWED.has(file.type)) {
-    return NextResponse.json({ error: '不支持的图片格式' }, { status: 400 });
+    return NextResponse.json({ error: '涓嶆敮鎸佺殑鍥剧墖鏍煎紡' }, { status: 400 });
   }
   if (file.size > MAX_BYTES) {
-    return NextResponse.json({ error: '文件超过 10MB' }, { status: 400 });
+    return NextResponse.json({ error: '鏂囦欢瓒呰繃 10MB' }, { status: 400 });
   }
 
   await fs.mkdir(UPLOAD_DIR, { recursive: true });

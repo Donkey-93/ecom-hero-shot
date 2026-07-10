@@ -17,7 +17,7 @@ export function PaletteRefInput({ ph }: { ph: PalettePlaceholder }) {
           <div className="flex-1" style={{ background: selectedPalette.accent }} />
         </div>
       ) : (
-        <p className="text-xs text-red-500">δѡ��ɫ</p>
+        <p className="text-xs text-red-500">未选配色</p>
       )}
     </div>
   );

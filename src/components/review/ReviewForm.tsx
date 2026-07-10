@@ -37,13 +37,13 @@ export function ReviewForm({ template, values, onChange }: Props) {
       });
       if (!r.ok) {
         const detail = await r.text().catch(() => '');
-        throw new Error('×ÔÓÉ·¢»ÓÊ§°Ü£º' + detail || String(r.status));
+        throw new Error('è‡ªç”±å‘æŒ¥å¤±è´¥ï¼š' + detail || String(r.status));
       }
       const { value } = (await r.json()) as { value: PlaceholderValue };
       onChange(key, value);
-      toast.success('ÒÑ×Ô¶¯Ìî³ä');
+      toast.success('å·²è‡ªåŠ¨å¡«å……');
     } catch (e) {
-      toast.error('×ÔÓÉ·¢»ÓÊ§°Ü£º' + (e instanceof Error ? e.message : String(e)));
+      toast.error('è‡ªç”±å‘æŒ¥å¤±è´¥ï¼š' + (e instanceof Error ? e.message : String(e)));
     } finally {
       setBusyKey(null);
     }
@@ -61,13 +61,13 @@ export function ReviewForm({ template, values, onChange }: Props) {
       });
       if (!r.ok) {
         const detail = await r.text().catch(() => '');
-        throw new Error('·­ÒëÊ§°Ü£º' + detail || String(r.status));
+        throw new Error('ç¿»è¯‘å¤±è´¥ï¼š' + detail || String(r.status));
       }
       const { text } = (await r.json()) as { text: string };
       onChange(key, text);
-      toast.success('ÒÑ×ªÓ¢ÎÄ');
+      toast.success('å·²è½¬è‹±æ–‡');
     } catch (e) {
-      toast.error('·­ÒëÊ§°Ü£º' + (e instanceof Error ? e.message : String(e)));
+      toast.error('ç¿»è¯‘å¤±è´¥ï¼š' + (e instanceof Error ? e.message : String(e)));
     } finally {
       setBusyKey(null);
     }

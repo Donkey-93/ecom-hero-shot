@@ -60,7 +60,7 @@ export function PromptPreview({
           onResult(data);
         }
       } catch {
-        /* surface upstream ¡ª keep last good result visible */
+        /* surface upstream â€” keep last good result visible */
       } finally {
         setLoading(false);
       }
@@ -82,10 +82,10 @@ export function PromptPreview({
 
   if (!palette) {
     return (
-      <div className="text-xs text-muted-foreground">ÌáÊ¾£ºÏÈÔÚ Step 3 Ñ¡ÔñÅäÉ«¡£</div>
+      <div className="text-xs text-muted-foreground">æç¤ºï¼šå…ˆåœ¨ Step 3 é€‰æ‹©é…è‰²ã€‚</div>
     );
   }
   return loading ? (
-    <div className="text-xs text-muted-foreground">äÖÈ¾ÖĞ¡­</div>
+    <div className="text-xs text-muted-foreground">æ¸²æŸ“ä¸­â€¦</div>
   ) : null;
 }

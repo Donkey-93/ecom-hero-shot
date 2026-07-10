@@ -47,7 +47,7 @@ export default function ReviewPage() {
   if (!preset || !selectedPalette) {
     return (
       <div className="max-w-3xl mx-auto p-8 text-sm text-muted-foreground">
-        ×¼±¸ÉóºËÒ³¡­
+        å‡†å¤‡å®¡æ ¸é¡µâ€¦
       </div>
     );
   }
@@ -72,9 +72,9 @@ export default function ReviewPage() {
         generatedPrompts,
       };
       await dbSet('gen:' + id, generation);
-      toast.success('ÒÑ±£´æµ½ÀúÊ·');
+      toast.success('å·²ä¿å­˜åˆ°å†å²');
     } catch (e) {
-      toast.error('±£´æÊ§°Ü£º' + (e instanceof Error ? e.message : String(e)));
+      toast.error('ä¿å­˜å¤±è´¥ï¼š' + (e instanceof Error ? e.message : String(e)));
     } finally {
       setSaving(false);
     }
@@ -82,8 +82,8 @@ export default function ReviewPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      <h2 className="text-2xl font-bold">Step 6£ºÉóºË & µ¼³ö</h2>
-      <p className="text-muted-foreground">ÖğÕÅÍ¼ºË¶Ô prompt + ÖĞÎÄ·­Òë¡£</p>
+      <h2 className="text-2xl font-bold">Step 6ï¼šå®¡æ ¸ & å¯¼å‡º</h2>
+      <p className="text-muted-foreground">é€å¼ å›¾æ ¸å¯¹ prompt + ä¸­æ–‡ç¿»è¯‘ã€‚</p>
       <Tabs defaultValue={generatedPrompts[0]?.templateId ?? templates[0]?.id ?? ''}>
         <TabsList>
           {templates.map(t => (
@@ -102,7 +102,7 @@ export default function ReviewPage() {
             >
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">²Î¿¼Í¼</CardTitle>
+                  <CardTitle className="text-base">å‚è€ƒå›¾</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -115,23 +115,23 @@ export default function ReviewPage() {
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-base">Ó¢ÎÄ Prompt</CardTitle>
+                  <CardTitle className="text-base">è‹±æ–‡ Prompt</CardTitle>
                   {result ? <CopyButton text={result.finalPrompt} /> : null}
                 </CardHeader>
                 <CardContent>
                   <pre className="text-xs whitespace-pre-wrap">
-                    {result?.finalPrompt ?? '¡ª Î´Éú³É ¡ª'}
+                    {result?.finalPrompt ?? 'â€” æœªç”Ÿæˆ â€”'}
                   </pre>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-base">ÖĞÎÄ·­Òë</CardTitle>
+                  <CardTitle className="text-base">ä¸­æ–‡ç¿»è¯‘</CardTitle>
                   {result ? <CopyButton text={result.chineseTranslation} /> : null}
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm whitespace-pre-wrap">
-                    {result?.chineseTranslation ?? '¡ª Î´Éú³É ¡ª'}
+                    {result?.chineseTranslation ?? 'â€” æœªç”Ÿæˆ â€”'}
                   </p>
                 </CardContent>
               </Card>
@@ -155,9 +155,9 @@ export default function ReviewPage() {
         />
         <div className="flex gap-2">
           <Button variant="outline" onClick={handleSave} disabled={saving}>
-            {saving ? '±£´æÖĞ¡­' : '±£´æµ½ÀúÊ·'}
+            {saving ? 'ä¿å­˜ä¸­â€¦' : 'ä¿å­˜åˆ°å†å²'}
           </Button>
-          <Button disabled>Éú³ÉÍ¼Æ¬£¨Phase 2£©</Button>
+          <Button disabled>ç”Ÿæˆå›¾ç‰‡ï¼ˆPhase 2ï¼‰</Button>
         </div>
       </div>
     </div>

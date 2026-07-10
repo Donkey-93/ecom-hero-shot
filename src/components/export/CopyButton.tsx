@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Copy, Check } from 'lucide-react';
 import { useState } from 'react';
 
-export function CopyButton({ text, label = '∏¥÷∆' }: { text: string; label?: string }) {
+export function CopyButton({ text, label = 'Â§çÂà∂' }: { text: string; label?: string }) {
   const [done, setDone] = useState(false);
   return (
     <Button
@@ -27,7 +27,7 @@ export function CopyButton({ text, label = '∏¥÷∆' }: { text: string; label?: str
             setDone(true);
             setTimeout(() => setDone(false), 1500);
           } catch {
-            /* swallow °™ nothing else we can do */
+            /* swallow ‚Äî nothing else we can do */
           } finally {
             document.body.removeChild(ta);
           }
@@ -35,7 +35,7 @@ export function CopyButton({ text, label = '∏¥÷∆' }: { text: string; label?: str
       }}
     >
       {done ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-      {done ? '“—∏¥÷∆' : label}
+      {done ? 'Â∑≤Â§çÂà∂' : label}
     </Button>
   );
 }

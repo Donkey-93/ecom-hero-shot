@@ -19,10 +19,10 @@ export function JsonExport({ generation }: { generation: Generation }) {
   }
   return (
     <div className="flex gap-2">
-      <CopyButton text={json} label="¸´ÖÆ JSON" />
+      <CopyButton text={json} label="å¤åˆ¶ JSON" />
       <Button onClick={download} variant="outline">
         <Download className="w-4 h-4 mr-1" />
-        ÏÂÔØ .json
+        ä¸‹è½½ .json
       </Button>
     </div>
   );

@@ -5,7 +5,7 @@ export function ChineseTranslation({ text }: { text: string }) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-base">ÖÐÎÄ·­Òë</CardTitle>
+        <CardTitle className="text-base">ä¸­æ–‡ç¿»è¯‘</CardTitle>
         <CopyButton text={text} />
       </CardHeader>
       <CardContent>

@@ -20,7 +20,7 @@ export function TranslateButton({ onClick, disabled }: { onClick: () => Promise<
       }}
     >
       {loading ? <Loader2 className="w-3 h-3 animate-spin" /> : <Languages className="w-3 h-3" />}
-      תӢ��
+      转英文
     </Button>
   );
 }

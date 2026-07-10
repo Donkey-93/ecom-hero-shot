@@ -45,7 +45,7 @@ export function ListInput({
             size="icon"
             variant="ghost"
             onClick={() => onChange(items.filter((_, j) => j !== i))}
-            aria-label={`É¾³ý ${ph.itemLabel} ${i + 1}`}
+            aria-label={`åˆ é™¤ ${ph.itemLabel} ${i + 1}`}
           >
             <X className="w-4 h-4" />
           </Button>
@@ -58,7 +58,7 @@ export function ListInput({
         disabled={items.length >= ph.maxItems}
       >
         <Plus className="w-4 h-4 mr-1" />
-        Ìí¼Ó {ph.itemLabel}
+        æ·»åŠ  {ph.itemLabel}
       </Button>
     </div>
   );

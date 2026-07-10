@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import { Upload } from 'lucide-react';
 
 /**
- * Minimal upload zone ¡ª uploads a file to /api/upload and returns the URL.
+ * Minimal upload zone â€” uploads a file to /api/upload and returns the URL.
  * The full-featured version (drag-drop, multi-file, image preview cropping)
  * is owned by Stream B; this minimal version lets Stream C build against it.
  */
@@ -27,7 +27,7 @@ export function UploadZone({
       const fd = new FormData();
       fd.append('file', file);
       const r = await fetch('/api/upload', { method: 'POST', body: fd });
-      if (!r.ok) throw new Error(`ÉÏ´«Ê§°Ü (${r.status})`);
+      if (!r.ok) throw new Error(`ä¸Šä¼ å¤±è´¥ (${r.status})`);
       const { url } = (await r.json()) as { url: string };
       onUploaded(url);
     } catch (e) {
@@ -62,7 +62,7 @@ export function UploadZone({
           className="inline-flex items-center gap-1 rounded border border-input bg-background px-3 py-1.5 text-sm hover:bg-accent disabled:opacity-50"
         >
           <Upload className="w-4 h-4" />
-          {uploading ? 'ÉÏ´«ÖĞ¡­' : currentUrl ? 'Ìæ»»' : 'ÉÏ´«'}
+          {uploading ? 'ä¸Šä¼ ä¸­â€¦' : currentUrl ? 'æ›¿æ¢' : 'ä¸Šä¼ '}
         </button>
         {error ? <span className="text-xs text-red-500">{error}</span> : null}
       </div>
