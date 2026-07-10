@@ -10,7 +10,22 @@ import { CopyButton } from '@/components/export/CopyButton';
 import { JsonExport } from '@/components/export/JsonExport';
 import { toast } from 'sonner';
 import { dbSet } from '@/lib/db';
-import type { Generation } from '@/lib/schemas';
+import type { Generation, PlaceholderValue } from '@/lib/schemas';
+
+/**
+ * The store groups placeholder values per templateId; the Generation schema
+ * (and the JSON we hand to the user) flattens them into a single map. This
+ * preserves Stream A's design choice in both directions.
+ */
+function flattenTemplateValues(
+  nested: Record<string, Record<string, PlaceholderValue>>
+): Record<string, PlaceholderValue> {
+  const out: Record<string, PlaceholderValue> = {};
+  for (const values of Object.values(nested)) {
+    for (const [k, v] of Object.entries(values)) out[k] = v;
+  }
+  return out;
+}
 
 export default function ReviewPage() {
   const router = useRouter();
@@ -38,6 +53,7 @@ export default function ReviewPage() {
   }
 
   const templates = preset.templates ?? [];
+  const flatValues = flattenTemplateValues(templateValues);
 
   async function handleSave() {
     setSaving(true);
@@ -52,7 +68,7 @@ export default function ReviewPage() {
         productImages,
         productContext,
         selectedPalette: selectedPalette!,
-        templateValues,
+        templateValues: flatValues,
         generatedPrompts,
       };
       await dbSet('gen:' + id, generation);
@@ -133,7 +149,7 @@ export default function ReviewPage() {
             productImages,
             productContext,
             selectedPalette: selectedPalette!,
-            templateValues,
+            templateValues: flatValues,
             generatedPrompts,
           }}
         />
