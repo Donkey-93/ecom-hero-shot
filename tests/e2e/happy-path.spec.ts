@@ -13,7 +13,7 @@ test('home page shows 3 entry cards', async ({ page }) => {
   await expect(page.getByRole('button', { name: '管理' })).toBeVisible();
 });
 
-test('gallery page loads and shows empty state when no history', async ({ page, context }) => {
+test('gallery page loads and shows empty state when no history', async ({ page }) => {
   // Clear IndexedDB before test
   await page.goto('/');
   await page.evaluate(async () => {
@@ -73,9 +73,18 @@ test('wizard navigation: upload (file) -> palette -> product (gated)', async ({ 
   await page.getByRole('button', { name: '下一步' }).click();
   await expect(page).toHaveURL(/\/generate\/palette$/);
 
-  // Wait for at least one palette card to appear (the API may mock quickly)
+  // The mock palette API has a 5% failure rate. Retry up to 5 times via
+  // the "重新生成" button until a palette card appears.
   const chooseButton = page.locator('button:has-text("选择")').first();
-  await expect(chooseButton).toBeVisible({ timeout: 15_000 });
+  for (let attempt = 0; attempt < 5; attempt++) {
+    if (await chooseButton.isVisible().catch(() => false)) break;
+    const retry = page.getByRole('button', { name: '重新生成' });
+    if (await retry.isVisible().catch(() => false)) {
+      await retry.click();
+    }
+    await page.waitForTimeout(500);
+  }
+  await expect(chooseButton).toBeVisible({ timeout: 5_000 });
   await chooseButton.click();
 
   // 4) Next -> product
