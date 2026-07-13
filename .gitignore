@@ -49,6 +49,7 @@ out/
 *.log
 playwright-report/
 test-results/
+pnpm-workspace.yaml
 
 # ecom-hero-shot project specific
 .env.local
@@ -60,3 +61,4 @@ out/
 *.log
 playwright-report/
 test-results/
+pnpm-workspace.yaml
