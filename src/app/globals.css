@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* 保留原有 @theme 块与 :root 变量（来自 Stream A） */
 @theme {
   --color-background: #ffffff;
   --color-foreground: #0a0a0a;
@@ -57,13 +58,101 @@
   --radius: 0.5rem;
 }
 
+/* ========== Apple-Design: 字体 / 排版 / 反馈 ========== */
+
 @layer base {
-  * {
-    border-color: var(--border);
+  html {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+      "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+      system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
+
   body {
+    border-color: var(--border);
     background-color: var(--background);
     color: var(--foreground);
     font-feature-settings: "rlig" 1, "calt" 1;
+    line-height: 1.5;
+  }
+
+  /* 大标题：紧凑 leading + 负 tracking */
+  h1,
+  h2,
+  .display {
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  /* 中等标题 */
+  h3,
+  h4 {
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+}
+
+@layer utilities {
+  /* 全局可交互反馈 — 按下即时缩放 */
+  button:not(:disabled),
+  a,
+  [role="button"],
+  .interactive {
+    transition: transform 100ms ease-out, background-color 150ms ease-out,
+      box-shadow 200ms ease-out, color 150ms ease-out, opacity 150ms ease-out;
+  }
+
+  button:active:not(:disabled),
+  a:active,
+  [role="button"]:active {
+    transform: scale(0.97);
+  }
+
+  /* 卡片默认阴影 + hover 提升 */
+  .card-elevate {
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out, border-color 200ms ease-out;
+  }
+  .card-elevate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.12),
+                0 4px 8px -4px rgba(0, 0, 0, 0.06);
+  }
+
+  /* 焦点环 — 苹果风格的蓝色光圈 */
+  *:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ========== Reduced Motion 适配 ========== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  button:active:not(:disabled),
+  a:active,
+  [role="button"]:active {
+    transform: none;
+  }
+  .card-elevate:hover {
+    transform: none;
+  }
+}
+
+/* ========== Reduced Transparency 适配 ========== */
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  [class*="backdrop-blur"] {
+    background-color: var(--background) !important;
+    backdrop-filter: none !important;
   }
 }
