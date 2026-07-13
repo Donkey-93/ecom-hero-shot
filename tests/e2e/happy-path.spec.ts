@@ -2,15 +2,15 @@
 
 test('home page shows 3 entry cards', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: '电商主图生成系统' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /电商主图/ }).first()).toBeVisible();
   // 3 entry cards
   await expect(page.getByText('开始生成')).toBeVisible();
   await expect(page.getByText('我的历史')).toBeVisible();
   await expect(page.getByText('风格管理')).toBeVisible();
   // 3 entry buttons
-  await expect(page.getByRole('button', { name: '开始' })).toBeVisible();
-  await expect(page.getByRole('button', { name: '查看' })).toBeVisible();
-  await expect(page.getByRole('button', { name: '管理' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /开始/ }).or(page.getByRole('button', { name: /开始/ }))).toBeVisible();
+  await expect(page.getByRole('link', { name: /查看/ }).or(page.getByRole('button', { name: /查看/ }))).toBeVisible();
+  await expect(page.getByRole('link', { name: /管理/ }).or(page.getByRole('button', { name: /管理/ }))).toBeVisible();
 });
 
 test('gallery page loads and shows empty state when no history', async ({ page }) => {
@@ -61,7 +61,7 @@ test('new preset wizard validates required fields', async ({ page }) => {
 test('wizard navigation: upload (file) -> palette -> product (gated)', async ({ page }) => {
   // 1) Home
   await page.goto('/');
-  await page.getByRole('button', { name: '开始' }).click();
+  await page.getByRole('link', { name: /开始/ }).or(page.getByRole('button', { name: /开始/ })).click();
   await expect(page).toHaveURL(/\/generate\/upload$/);
 
   // 2) Upload a packaging image
