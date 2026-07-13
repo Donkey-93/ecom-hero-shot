@@ -100,20 +100,22 @@ function DetailsInner() {
           <TabsContent
             key={t.id}
             value={t.id}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+            className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-8"
           >
             <ReviewForm
               template={t}
               values={templateValues[t.id] ?? {}}
               onChange={(k, v) => setPlaceholderValue(t.id, k, v)}
             />
-            <div className="space-y-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={t.referenceImageUrl}
-                alt={t.name}
-                className="rounded border w-full"
-              />
+            <div className="space-y-4 lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:pr-2">
+              <div className="rounded-xl overflow-hidden border border-border/40 shadow-sm">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={t.referenceImageUrl}
+                  alt={t.name}
+                  className="w-full"
+                />
+              </div>
               <Card>
                 <CardHeader>
                   <CardTitle className="text-base">最终英文 Prompt</CardTitle>
