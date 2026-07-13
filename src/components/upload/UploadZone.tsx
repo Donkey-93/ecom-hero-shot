@@ -15,16 +15,29 @@ export function UploadZone({ label, currentUrl, onUploaded }: UploadZoneProps) {
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  function readAsDataURL(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = () => reject(new Error('读取文件失败'));
+      reader.readAsDataURL(file);
+    });
+  }
+
   async function handleFile(file: File) {
+    if (!file.type.startsWith('image/')) {
+      setError('请选择图片文件');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setError('文件超过 10MB');
+      return;
+    }
     setUploading(true);
     setError(null);
     try {
-      const fd = new FormData();
-      fd.append('file', file);
-      const r = await fetch('/api/upload', { method: 'POST', body: fd });
-      if (!r.ok) throw new Error('上传失败 (' + r.status + ')');
-      const { url } = (await r.json()) as { url: string };
-      onUploaded(url);
+      const dataUrl = await readAsDataURL(file);
+      onUploaded(dataUrl);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
