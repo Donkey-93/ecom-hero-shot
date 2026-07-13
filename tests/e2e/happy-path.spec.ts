@@ -41,7 +41,7 @@ test('styles admin page lists builtin preset', async ({ page }) => {
   await expect(page.getByRole('heading', { name: '风格管理' })).toBeVisible();
   await expect(page.getByText('内置风格')).toBeVisible();
   await expect(page.getByText('亮黄美妆工作室')).toBeVisible();
-  await expect(page.getByText('(内置)')).toBeVisible();
+  await expect(page.locator('text=/^内置$/').first()).toBeVisible();
   // Upload new preset link
   await expect(page.getByRole('link', { name: /上传新风格/ })).toBeVisible();
 });
