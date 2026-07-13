@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ProductContextSchema, type ProductContext } from '@/lib/schemas';
 import { Plus, X, Sparkles, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { useState } from 'react';
 
 interface Props {
@@ -35,13 +36,16 @@ export function ProductContextForm({ initialValue, onSubmit, onAIExtract }: Prop
     try {
       const partial = await onAIExtract();
       if (partial) {
-        if (partial.coreSellingPoints) setValue('coreSellingPoints', partial.coreSellingPoints);
-        if (partial.audience !== undefined) setValue('audience', partial.audience);
-        if (partial.occasion !== undefined) setValue('occasion', partial.occasion);
+        if (partial.productName) setValue('productName', partial.productName);
+        if (partial.coreIngredients) setValue('coreIngredients', partial.coreIngredients);
+        if (partial.sellingPoints) setValue('coreSellingPoints', partial.sellingPoints);
+        if (partial.audience) setValue('audience', partial.audience);
+        if (partial.occasion) setValue('occasion', partial.occasion);
       }
-    } finally {
-      setAiLoading(false);
-    }
+      toast.success('已自动填充');
+    } catch (e: any) {
+      toast.error(e.message ?? 'AI 识别失败');
+    } finally { setAiLoading(false); }
   }
 
   return (
@@ -96,7 +100,7 @@ export function ProductContextForm({ initialValue, onSubmit, onAIExtract }: Prop
               ) : (
                 <Sparkles className="w-4 h-4" />
               )}
-              AI 提取
+              AI 识别图片
             </Button>
             <Button
               type="button"

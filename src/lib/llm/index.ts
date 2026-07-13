@@ -24,6 +24,16 @@ export interface LLMClient {
     palette: ColorPalette,
     ctx: ProductContext,
   ): Promise<string>;
+  identifyProductFromImages(
+    imageDataUrls: string[],
+    hints?: string,
+  ): Promise<{
+    productName: string;
+    coreIngredients: string[];
+    coreSellingPoints: string[];
+    audience: string;
+    occasion: string;
+  }>;
 }
 
 async function getLLMClient(): Promise<LLMClient> {

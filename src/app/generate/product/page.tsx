@@ -22,7 +22,29 @@ export default function ProductPage() {
   }
 
   async function handleAI() {
-    if (!productContext.productName) return null;
+    // 收集所有已上传图（dataURL）
+    const images = [productImages.packaging, productImages.product].filter(
+      (x): x is string => Boolean(x),
+    );
+
+    // 有图就调视觉识别，否则纯文本提取
+    if (images.length > 0) {
+      const r = await fetch('/api/llm/identify-product', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          images,
+          hints: productContext.productName || undefined,
+        }),
+      });
+      if (!r.ok) throw new Error('AI 识别失败');
+      return await r.json();
+    }
+
+    // 无图 fallback: 必须有产品名才能纯文本提取
+    if (!productContext.productName) {
+      throw new Error('请先填产品名或上传商品图');
+    }
     const client = await llm();
     const r = await client.extractSellingPoints(productContext);
     return {

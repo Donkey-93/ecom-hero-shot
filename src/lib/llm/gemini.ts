@@ -58,4 +58,69 @@ export class GeminiLLMClient implements LLMClient {
     // Simple deterministic stub for the chat-only translation path; concrete UX is handled in UI.
     return `[Gemini 翻译占位] 主导色: ${palette.primary} / 背景: ${palette.background}。该功能用于离线调试，工程集成后再启用真实翻译。`;
   }
+
+  async identifyProductFromImages(
+    imageDataUrls: string[],
+    hints?: string,
+  ): Promise<{
+    productName: string;
+    coreIngredients: string[];
+    coreSellingPoints: string[];
+    audience: string;
+    occasion: string;
+  }> {
+    if (imageDataUrls.length === 0) {
+      throw new Error('No images provided');
+    }
+
+    // 解析 dataURL -> { mimeType, base64 }
+    const imageParts = imageDataUrls.map(dataUrl => {
+      const match = dataUrl.match(/^data:(image\/[a-z]+);base64,(.+)$/);
+      if (!match) throw new Error('Invalid image data URL');
+      return {
+        inlineData: {
+          mimeType: match[1],
+          data: match[2],
+        },
+      };
+    });
+
+    const promptText = `你是资深电商运营 + 产品经理。看这些产品图（包装 + 产品），从图里识别并输出 JSON。
+
+${hints ? `用户额外提示: ${hints}\n` : ''}
+要求：
+- productName: 推断产品中文名（如"清爽控油洗发湿巾"），用图上印刷的名字优先
+- coreIngredients: 3-5 个核心成分（中文，从图上文字或推断）
+- coreSellingPoints: 4 条短句卖点（中文，≤12 字，强动词开头）
+- audience: 1 句目标人群描述
+- occasion: 1 句使用场景描述
+
+严格按这个 JSON 输出（不要任何其他文字）:
+{
+  "productName": "...",
+  "coreIngredients": ["...", "..."],
+  "coreSellingPoints": ["...", "...", "...", "..."],
+  "audience": "...",
+  "occasion": "..."
+}`;
+
+    const result = await this.model.generateContent({
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            { text: promptText },
+            ...imageParts,
+          ],
+        },
+      ],
+      generationConfig: {
+        responseMimeType: 'application/json',
+        temperature: 0.4,
+      },
+    });
+
+    const text = result.response.text();
+    return JSON.parse(text);
+  }
 }

@@ -39,4 +39,15 @@ export class MockLLMClient implements LLMClient {
     await sleep(50);
     return '[中文翻译 mock] 颜色：' + p.primary + ' / ' + p.background + '。这是一段测试翻译，用于离线调试。';
   }
+
+  async identifyProductFromImages(_imageDataUrls: string[], _hints?: string) {
+    await sleep(500);
+    return {
+      productName: '清爽控油洗发湿巾 (mock)',
+      coreIngredients: ['木薯淀粉', '乳酸发酵物', '泛醇'],
+      coreSellingPoints: ['30秒瞬时控油', '温和不刺激', '便携装随时用', '无硅油配方'],
+      audience: '都市白领 / 健身爱好者 / 出差党',
+      occasion: '健身出汗后 / 临时会议前 / 长途飞行中',
+    };
+  }
 }
