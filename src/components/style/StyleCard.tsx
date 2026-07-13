@@ -1,9 +1,8 @@
-'use client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { StylePreset } from '@/lib/schemas';
-import { Check } from 'lucide-react';
+import { Check, Layers } from 'lucide-react';
 
 export function StyleCard({
   preset,
@@ -18,20 +17,42 @@ export function StyleCard({
   return (
     <Card
       className={cn(
-        'cursor-pointer overflow-hidden transition-all',
-        selected && 'ring-2 ring-primary',
+        'card-elevate cursor-pointer overflow-hidden group',
+        selected
+          ? 'ring-2 ring-primary border-primary shadow-lg shadow-primary/10'
+          : 'border-border/60 hover:border-primary/40',
       )}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={preset.coverImageUrl} alt={preset.name} className="w-full h-40 object-cover" />
-      <CardContent className="p-4 space-y-2">
-        <div className="flex items-center justify-between">
-          <h3 className="font-semibold">{preset.name}</h3>
-          {selected ? <Check className="w-5 h-5 text-primary" /> : null}
+      <div className="relative overflow-hidden aspect-[4/3] bg-muted">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={preset.coverImageUrl}
+          alt={preset.name}
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        {selected && (
+          <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-primary flex items-center justify-center shadow-md">
+            <Check className="w-4 h-4 text-primary-foreground" strokeWidth={3} />
+          </div>
+        )}
+      </div>
+      <CardContent className="p-4 space-y-3">
+        <div>
+          <h3 className="font-semibold text-base leading-tight">{preset.name}</h3>
+          <p className="text-xs text-muted-foreground mt-1 line-clamp-2 leading-relaxed">
+            {preset.description}
+          </p>
         </div>
-        <p className="text-xs text-muted-foreground">{preset.description}</p>
-        <div className="text-xs">📐 {count} 张主图</div>
-        <Button onClick={onSelect} variant={selected ? 'default' : 'outline'} className="w-full">
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <Layers className="w-3.5 h-3.5" strokeWidth={1.75} />
+          <span>{count} 张主图</span>
+        </div>
+        <Button
+          onClick={onSelect}
+          variant={selected ? 'default' : 'outline'}
+          className="w-full"
+          size="sm"
+        >
           {selected ? '已选' : '选择'}
         </Button>
       </CardContent>
