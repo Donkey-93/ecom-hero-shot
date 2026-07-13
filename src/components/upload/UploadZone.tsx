@@ -36,14 +36,14 @@ export function UploadZone({ label, currentUrl, onUploaded }: UploadZoneProps) {
     <div className="space-y-2">
       <label className="text-sm font-medium">{label}</label>
       {currentUrl ? (
-        <div className="relative border rounded-lg p-4 bg-muted/30">
+        <div className="relative border border-border/60 rounded-xl p-4 bg-muted/20 group">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={currentUrl} alt={label} className="max-h-48 mx-auto rounded" />
+          <img src={currentUrl} alt={label} className="max-h-48 mx-auto rounded-lg" />
           <button
             type="button"
             aria-label="移除"
-            className="absolute top-2 right-2 inline-flex items-center justify-center w-7 h-7 rounded bg-background/80 hover:bg-background border"
             onClick={() => onUploaded('')}
+            className="absolute top-2 right-2 inline-flex items-center justify-center w-7 h-7 rounded-md bg-background/80 hover:bg-background border opacity-0 group-hover:opacity-100 transition-opacity"
           >
             <X className="w-4 h-4" />
           </button>
@@ -63,15 +63,30 @@ export function UploadZone({ label, currentUrl, onUploaded }: UploadZoneProps) {
           }}
           onClick={() => inputRef.current?.click()}
           className={cn(
-            'border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors',
-            dragOver ? 'border-primary bg-primary/5' : 'border-muted-foreground/25 hover:border-primary/50',
+            'border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all duration-200',
+            dragOver
+              ? 'border-primary bg-primary/5 scale-[1.02] shadow-lg shadow-primary/10'
+              : 'border-border hover:border-primary/50 hover:bg-muted/30',
           )}
         >
-          <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">
-            {uploading ? '上传中…' : '点击或拖拽图片到此处'}
+          <div
+            className={cn(
+              'w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center transition-all',
+              dragOver ? 'bg-primary/15 scale-110' : 'bg-muted',
+            )}
+          >
+            <Upload
+              className={cn(
+                'w-6 h-6 transition-colors',
+                dragOver ? 'text-primary' : 'text-muted-foreground',
+              )}
+              strokeWidth={1.75}
+            />
+          </div>
+          <p className="text-sm font-medium">
+            {uploading ? '上传中…' : dragOver ? '松开即可上传' : '点击或拖拽图片到此处'}
           </p>
-          <p className="text-xs text-muted-foreground mt-1">PNG / JPEG / WebP / GIF，最大 10MB</p>
+          <p className="text-xs text-muted-foreground mt-1.5">PNG / JPEG / WebP / GIF，最大 10MB</p>
           <input
             ref={inputRef}
             type="file"
