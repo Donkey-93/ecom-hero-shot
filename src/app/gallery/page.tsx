@@ -1,10 +1,11 @@
-﻿'use client';
+'use client';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, History } from 'lucide-react';
+import { ArrowLeft, History, Sparkles } from 'lucide-react';
 import { dbListGenerations } from '@/lib/db';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { EmptyState } from '@/components/common/EmptyState';
 import type { Generation } from '@/lib/schemas';
 
 export default function GalleryPage() {
@@ -46,29 +47,33 @@ export default function GalleryPage() {
       {items === null ? (
         <p className="text-muted-foreground">加载中…</p>
       ) : items.length === 0 ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>还没有生成记录</CardTitle>
-            <CardDescription>完成一次 6 步向导后，生成的 prompt 会保存到这里。</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button asChild>
-              <Link href="/generate/upload">开始生成</Link>
-            </Button>
-          </CardContent>
-        </Card>
+        <EmptyState
+          title="还没有生成记录"
+          description="完成一次 6 步向导后，生成的 prompt 会保存到这里。"
+          icon={Sparkles}
+          cta={{ label: '开始生成', href: '/generate/upload' }}
+        />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map(g => (
-            <Card key={g.id}>
-              <CardHeader>
-                <CardTitle className="text-base">{g.productContext.productName}</CardTitle>
-                <CardDescription>{new Date(g.createdAt).toLocaleString()}</CardDescription>
+            <Card
+              key={g.id}
+              className="card-elevate border-border/40 overflow-hidden group cursor-pointer"
+            >
+              <div className="aspect-video bg-gradient-to-br from-yellow-50 to-amber-100 flex items-center justify-center">
+                <Sparkles
+                  className="w-8 h-8 text-yellow-500/40 group-hover:scale-110 transition-transform"
+                  strokeWidth={1.5}
+                />
+              </div>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-semibold line-clamp-1">
+                  {g.productContext.productName}
+                </CardTitle>
               </CardHeader>
-              <CardContent className="text-xs text-muted-foreground space-y-1">
-                <p>{g.generatedPrompts.length} 张主图 prompt</p>
-                <p>风格：{g.presetId}</p>
-                <p>配色：{g.selectedPalette.name}</p>
+              <CardContent className="text-xs text-muted-foreground space-y-0.5">
+                <p>{new Date(g.createdAt).toLocaleString()}</p>
+                <p>{g.generatedPrompts.length} 张主图</p>
               </CardContent>
             </Card>
           ))}
