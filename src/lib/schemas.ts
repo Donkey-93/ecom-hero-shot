@@ -1,4 +1,4 @@
-import { z } from 'zod';
+﻿import { z } from 'zod';
 
 const PlaceholderBaseSchema = z.object({
   key: z.string().min(1),
@@ -116,7 +116,7 @@ export const GenerationSchema = z.object({
   }),
   productContext: ProductContextSchema,
   selectedPalette: ColorPaletteSchema,
-  templateValues: z.record(z.string(), PlaceholderValueSchema),
+  templateValues: z.record(z.string(), z.record(z.string(), PlaceholderValueSchema)),
   generatedPrompts: z.array(z.object({
     templateId: z.string(),
     finalPrompt: z.string(),

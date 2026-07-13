@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,22 +10,7 @@ import { CopyButton } from '@/components/export/CopyButton';
 import { JsonExport } from '@/components/export/JsonExport';
 import { toast } from 'sonner';
 import { dbSet } from '@/lib/db';
-import type { Generation, PlaceholderValue } from '@/lib/schemas';
-
-/**
- * The store groups placeholder values per templateId; the Generation schema
- * (and the JSON we hand to the user) flattens them into a single map. This
- * preserves Stream A's design choice in both directions.
- */
-function flattenTemplateValues(
-  nested: Record<string, Record<string, PlaceholderValue>>
-): Record<string, PlaceholderValue> {
-  const out: Record<string, PlaceholderValue> = {};
-  for (const values of Object.values(nested)) {
-    for (const [k, v] of Object.entries(values)) out[k] = v;
-  }
-  return out;
-}
+import type { Generation } from '@/lib/schemas';
 
 export default function ReviewPage() {
   const router = useRouter();
@@ -53,7 +38,6 @@ export default function ReviewPage() {
   }
 
   const templates = preset.templates ?? [];
-  const flatValues = flattenTemplateValues(templateValues);
 
   async function handleSave() {
     setSaving(true);
@@ -68,7 +52,7 @@ export default function ReviewPage() {
         productImages,
         productContext,
         selectedPalette: selectedPalette!,
-        templateValues: flatValues,
+        templateValues,
         generatedPrompts,
       };
       await dbSet('gen:' + id, generation);
@@ -149,13 +133,13 @@ export default function ReviewPage() {
             productImages,
             productContext,
             selectedPalette: selectedPalette!,
-            templateValues: flatValues,
+            templateValues,
             generatedPrompts,
           }}
         />
         <div className="flex gap-2">
           <Button variant="outline" onClick={handleSave} disabled={saving}>
-            {saving ? '保存中…' : '保存到历史'}
+            {saving ? '保存中…' : '保存到历史' }
           </Button>
           <Button disabled>生成图片（Phase 2）</Button>
         </div>
