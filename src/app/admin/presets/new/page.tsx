@@ -58,19 +58,10 @@ export default function NewPresetPage() {
   }
 
   return (
-    <main className="min-h-screen p-8 max-w-2xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Plus className="w-7 h-7 text-purple-500" />
-          <h1 className="text-3xl font-bold">上传新风格</h1>
-        </div>
-        <Button asChild variant="outline" size="sm">
-          <Link href="/admin/styles">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            返回风格管理
-          </Link>
-        </Button>
-      </div>
+    <main className="min-h-screen p-6 md:p-12 max-w-2xl mx-auto space-y-6">
+    <div className="space-y-1.5">
+      <h1 className="text-3xl font-bold tracking-tight">上传新风格</h1>
+    </div>
 
       <Card>
         <CardHeader>

@@ -43,19 +43,20 @@ export default function StylesAdminPage() {
         <h2 className="text-lg font-semibold mb-3">内置风格</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {BUILTIN_PRESETS.map(p => (
-            <Card key={p.id}>
-              <CardHeader>
-                <CardTitle className="text-base">
-                  {p.name}
-                  <span className="ml-2 text-xs text-muted-foreground">(内置)</span>
-                </CardTitle>
-                <CardDescription>{p.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="text-sm text-muted-foreground space-y-1">
-                <p>{p.templates?.length ?? 0} 张主图模板</p>
-                <p className="text-xs">ID: {p.id}</p>
-              </CardContent>
-            </Card>
+            <Card key={p.id} className="card-elevate border-border/40">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-base">{p.name}</CardTitle>
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground px-2 py-0.5 rounded-full bg-muted">
+                      内置
+                    </span>
+                  </div>
+                </CardHeader>
+                <CardContent className="text-sm text-muted-foreground space-y-1">
+                  <p className="line-clamp-2 leading-relaxed">{p.description}</p>
+                  <p className="text-xs">{p.templates?.length ?? 0} 张主图</p>
+                </CardContent>
+              </Card>
           ))}
         </div>
       </section>
@@ -79,16 +80,20 @@ export default function StylesAdminPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {userPresets.map(p => (
-              <Card key={p.id}>
-                <CardHeader>
+              <Card key={p.id} className="card-elevate border-border/40">
+              <CardHeader className="pb-2">
+                <div className="flex items-center justify-between">
                   <CardTitle className="text-base">{p.name}</CardTitle>
-                  {p.description ? <CardDescription>{p.description}</CardDescription> : null}
-                </CardHeader>
-                <CardContent className="text-sm text-muted-foreground space-y-1">
-                  <p>{p.templates?.length ?? 0} 张主图模板</p>
-                  <p className="text-xs">创建于 {new Date(p.createdAt).toLocaleDateString()}</p>
-                </CardContent>
-              </Card>
+                  <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground px-2 py-0.5 rounded-full bg-muted">
+                    用户
+                  </span>
+                </div>
+              </CardHeader>
+              <CardContent className="text-sm text-muted-foreground space-y-1">
+                {p.description ? <p className="line-clamp-2 leading-relaxed">{p.description}</p> : null}
+                <p className="text-xs">{p.templates?.length ?? 0} 张主图</p>
+              </CardContent>
+            </Card>
             ))}
           </div>
         )}
