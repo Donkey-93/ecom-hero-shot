@@ -82,39 +82,39 @@ export default function ReviewPage() {
             <TabsContent
               key={t.id}
               value={t.id}
-              className="grid grid-cols-1 lg:grid-cols-3 gap-4"
+              className="grid grid-cols-1 lg:grid-cols-3 gap-5"
             >
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">参考图</CardTitle>
+              <Card className="border-border/40 overflow-hidden">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">参考图</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={t.referenceImageUrl}
                     alt={t.name}
-                    className="w-full rounded"
+                    className="w-full aspect-square object-cover"
                   />
                 </CardContent>
               </Card>
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-base">英文 Prompt</CardTitle>
+              <Card className="border-border/40">
+                <CardHeader className="pb-3 flex flex-row items-center justify-between">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">英文 Prompt</CardTitle>
                   {result ? <CopyButton text={result.finalPrompt} /> : null}
                 </CardHeader>
                 <CardContent>
-                  <pre className="text-xs whitespace-pre-wrap">
+                  <pre className="text-xs whitespace-pre-wrap leading-relaxed font-mono">
                     {result?.finalPrompt ?? '— 未生成 —'}
                   </pre>
                 </CardContent>
               </Card>
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-base">中文翻译</CardTitle>
+              <Card className="border-border/40">
+                <CardHeader className="pb-3 flex flex-row items-center justify-between">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">中文翻译</CardTitle>
                   {result ? <CopyButton text={result.chineseTranslation} /> : null}
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm whitespace-pre-wrap">
+                  <p className="text-sm whitespace-pre-wrap leading-relaxed">
                     {result?.chineseTranslation ?? '— 未生成 —'}
                   </p>
                 </CardContent>
