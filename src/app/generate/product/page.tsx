@@ -48,7 +48,7 @@ export default function ProductPage() {
     const client = await llm();
     const r = await client.extractSellingPoints(productContext);
     return {
-      sellingPoints: r.sellingPoints,
+      coreSellingPoints: r.sellingPoints,
       audience: r.audience,
       occasion: r.occasion,
     };

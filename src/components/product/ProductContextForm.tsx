@@ -38,7 +38,7 @@ export function ProductContextForm({ initialValue, onSubmit, onAIExtract }: Prop
       if (partial) {
         if (partial.productName) setValue('productName', partial.productName);
         if (partial.coreIngredients) setValue('coreIngredients', partial.coreIngredients);
-        if (partial.sellingPoints) setValue('coreSellingPoints', partial.sellingPoints);
+        if (partial.coreSellingPoints) setValue('coreSellingPoints', partial.coreSellingPoints);
         if (partial.audience) setValue('audience', partial.audience);
         if (partial.occasion) setValue('occasion', partial.occasion);
       }
